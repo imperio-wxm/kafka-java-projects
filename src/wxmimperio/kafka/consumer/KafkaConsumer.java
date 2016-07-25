@@ -1,18 +1,17 @@
 package wxmimperio.kafka.consumer;
 
+import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.serializer.StringDecoder;
 import kafka.utils.VerifiableProperties;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import wxmimperio.kafka.common.ParamsConst;
@@ -21,17 +20,16 @@ import wxmimperio.kafka.utils.PropertyUtil;
 /**
  * Created by weiximing.imperio on 2016/7/22.
  */
-public class Consumer {
-    private static final Logger LOG = LoggerFactory.getLogger(Consumer.class);
+public class KafkaConsumer {
+    private static final Logger LOG = LoggerFactory.getLogger(KafkaConsumer.class);
 
     private final ConsumerConnector consumer;
     private final String topic;
     private ExecutorService executor;
 
 
-    public Consumer(String zookeeper, String groupId, String topic) {
-        this.consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
-                createConsumerConfig(zookeeper, groupId));
+    public KafkaConsumer(String zookeeper, String groupId, String topic) {
+        this.consumer = Consumer.createJavaConsumerConnector(createConsumerConfig(zookeeper, groupId));
         this.topic = topic;
     }
 
@@ -48,7 +46,7 @@ public class Consumer {
         //serialize
         props.put(ParamsConst.SERIALIZER_CLASS, PropertyUtil.getSerializedClass());
 
-        LOG.info("Consumer Info: [zk=" + zookeeper + " group=" + groupId +"]");
+        LOG.info("Consumer Info: [zk=" + zookeeper + " group=" + groupId + "]");
 
         return new ConsumerConfig(props);
     }

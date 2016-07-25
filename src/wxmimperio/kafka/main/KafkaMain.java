@@ -1,6 +1,6 @@
 package wxmimperio.kafka.main;
 
-import wxmimperio.kafka.consumer.Consumer;
+import wxmimperio.kafka.consumer.KafkaConsumer;
 import wxmimperio.kafka.utils.PropertyUtil;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class KafkaMain {
         for(String zk : zkList) {
             for(String topic : topicList) {
                 for (String groupId : groupIdList) {
-                    Consumer consumer = new Consumer(zk, groupId, topic);
+                    KafkaConsumer consumer = new KafkaConsumer(zk, groupId, topic);
                     consumer.run(Integer.valueOf(PropertyUtil.getThreads()));
                 }
             }
