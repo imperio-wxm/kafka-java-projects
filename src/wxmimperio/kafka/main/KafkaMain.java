@@ -13,8 +13,8 @@ public class KafkaMain {
         List<String> topicList = PropertyUtil.getTopicList();
 
         for(String zk : zkList) {
-            for(String topic : topicList) {
-                for (String groupId : groupIdList) {
+            for(String groupId : groupIdList) {
+                for (String topic : topicList) {
                     KafkaConsumer consumer = new KafkaConsumer(zk, groupId, topic);
                     consumer.run(Integer.valueOf(PropertyUtil.getThreads()));
                 }
