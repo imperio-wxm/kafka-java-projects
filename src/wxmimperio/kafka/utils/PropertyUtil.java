@@ -3,7 +3,6 @@ package wxmimperio.kafka.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import wxmimperio.kafka.common.ParamsConst;
-
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -36,7 +35,7 @@ public class PropertyUtil {
     ///////////////////////////////// kafka props start /////////////////////////////////
 
     /**
-     * 获取ZK连接IP列表
+     * Get zookeeper IP list
      *
      * @return list
      */
@@ -46,7 +45,7 @@ public class PropertyUtil {
     }
 
     /**
-     * 获取GroupId列表
+     * Get group ID list
      *
      * @return list
      */
@@ -56,7 +55,7 @@ public class PropertyUtil {
     }
 
     /**
-     * 获取Topic列表
+     * Get topic list
      *
      * @return list
      */
