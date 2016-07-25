@@ -1,17 +1,24 @@
 package wxmimperio.kafka.main;
 
 import wxmimperio.kafka.consumer.Consumer;
+import wxmimperio.kafka.utils.PropertyUtil;
+
+import java.util.List;
 
 public class KafkaMain {
 
     public static void main(String[] args) {
-        String zooKeeper = "192.168.18.35:2181";
-        String groupId = "group_1";
-        String topic = "topic_1";
-        int threads = Integer.parseInt("4");
-        String autoCommitInterval = "1000";
+        List<String> zkList = PropertyUtil.getZKConnectList();
+        List<String> groupIdList = PropertyUtil.getGroupIdList();
+        List<String> topicList = PropertyUtil.getTopicList();
 
-        Consumer consumer = new Consumer(zooKeeper, groupId, topic, autoCommitInterval);
-        consumer.run(threads);
+        for(String zk : zkList) {
+            for(String topic : topicList) {
+                for (String groupId : groupIdList) {
+                    Consumer consumer = new Consumer(zk, groupId, topic);
+                    consumer.run(Integer.valueOf(PropertyUtil.getThreads()));
+                }
+            }
+        }
     }
 }

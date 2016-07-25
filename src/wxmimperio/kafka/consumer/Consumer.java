@@ -15,6 +15,8 @@ import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import wxmimperio.kafka.common.ParamsConst;
+import wxmimperio.kafka.utils.PropertyUtil;
 
 /**
  * Created by weiximing.imperio on 2016/7/22.
@@ -27,24 +29,24 @@ public class Consumer {
     private ExecutorService executor;
 
 
-    public Consumer(String zookeeper, String groupId, String topic, String autoCommitInterval) {
+    public Consumer(String zookeeper, String groupId, String topic) {
         this.consumer = kafka.consumer.Consumer.createJavaConsumerConnector(
-                createConsumerConfig(zookeeper, groupId, autoCommitInterval));
+                createConsumerConfig(zookeeper, groupId));
         this.topic = topic;
     }
 
     //Init conf
-    private static ConsumerConfig createConsumerConfig(String zookeeper, String groupId, String autoCommitInterval) {
+    private static ConsumerConfig createConsumerConfig(String zookeeper, String groupId) {
         Properties props = new Properties();
-        props.put("zookeeper.connect", zookeeper);
-        props.put("group.id", groupId);
-        props.put("zookeeper.session.timeout.ms", "400");
-        props.put("zookeeper.sync.time.ms", "200");
-        props.put("auto.commit.interval.ms", autoCommitInterval);
+        props.put(ParamsConst.ZOOKEEPER_CONNECT, zookeeper);
+        props.put(ParamsConst.GROUP_ID, groupId);
+        props.put(ParamsConst.ZOOKEEPER_SESSION_TIMEOUT, PropertyUtil.getZookeeperSessionTimeout());
+        props.put(ParamsConst.ZOOKEEPER_SYNC_TIME, PropertyUtil.getZookeeperSyncTime());
+        props.put(ParamsConst.AUTO_COMMIT_INTERVAL, PropertyUtil.getAutoCommitInterval());
         //fix offset
-        props.put("auto.offset.reset", "smallest");
+        props.put(ParamsConst.AUTO_OFFSET_RESET, PropertyUtil.getAutoOffsetReset());
         //serialize
-        props.put("serializer.class", "kafka.serializer.StringEncoder");
+        props.put(ParamsConst.SERIALIZER_CLASS, PropertyUtil.getSerializedClass());
 
         LOG.info("Consumer Info: [zk=" + zookeeper + " group=" + groupId +"]");
 

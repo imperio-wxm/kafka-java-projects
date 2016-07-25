@@ -19,6 +19,7 @@ public class ProducerTest {
 
         Producer<String, String> producer;
         String TOPIC = "topic_1";
+        String TOPIC2 = "topic_2";
 
         Properties props = new Properties();
         //此处配置的是kafka的端口
@@ -33,9 +34,12 @@ public class ProducerTest {
         int messageNo = 1000;
         while (true) {
             String key = String.valueOf(messageNo);
-            String data = "hello kafka message " + key;
-            producer.send(new KeyedMessage<String, String>(TOPIC,key,data));
-            System.out.println(data);
+            String data_1 = "hello kafka message1 " + key;
+            producer.send(new KeyedMessage<String, String>(TOPIC,key,data_1));
+            System.out.println(data_1);
+            String data_2 = "hello kafka message2 " + key;
+            producer.send(new KeyedMessage<String, String>(TOPIC2,key,data_2));
+            System.out.println(data_2);
             messageNo ++;
             try {
                 sleep(500);
